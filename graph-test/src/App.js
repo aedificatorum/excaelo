@@ -1,25 +1,54 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import '../node_modules/react-vis/dist/style.css';
+import { XYPlot, LineSeries, VerticalGridLines, XAxis, YAxis, HorizontalGridLines } from 'react-vis';
 
-function App() {
+const App = () => {
+  const modifyTheData = () => {
+    const newData = data.slice();
+
+    const newMaxX = maxX + 1;
+    const yPoint = Math.floor(Math.random() * 15);
+
+    newData.push({ x: newMaxX, y: yPoint});
+    setData(newData);
+    setMaxX(newMaxX);
+  }
+
+  const [maxX, setMaxX] = useState(9);
+
+  const [data, setData] = useState(
+    [
+    { x: 0, y: 8 },
+    { x: 1, y: 5 },
+    { x: 2, y: 4 },
+    { x: 3, y: 9 },
+    { x: 4, y: 1 },
+    { x: 5, y: 7 },
+    { x: 6, y: 6 },
+    { x: 7, y: 3 },
+    { x: 8, y: 2 },
+    { x: 9, y: 0 }
+  ]);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <main>
+      <XYPlot height={300} width={300}>
+        <LineSeries data={data} />
+      </XYPlot>
+
+      <button onClick={modifyTheData}>
+        Modify the data
+      </button>
+
+      <XYPlot height={300} width={300}>
+        <VerticalGridLines />
+        <HorizontalGridLines />
+        <XAxis />
+        <YAxis />
+        <LineSeries data={data} />
+      </XYPlot>
+    </main>
+
   );
 }
 
