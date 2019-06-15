@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ResponsiveLine } from 'nivo'
 import '../node_modules/react-vis/dist/style.css';
 import { XYPlot, LineSeries, VerticalGridLines, XAxis, YAxis, HorizontalGridLines } from 'react-vis';
 
@@ -30,6 +31,21 @@ const App = () => {
     { x: 9, y: 0 }
   ]);
 
+  const getNivoData = () => {
+    const newData = [
+      {
+        id: "The First Line",
+        data: data
+      },
+      {
+        id: "The Second Line",
+        data: data.map(point => {return {x: point.x, y: point.y - 3}})
+      }
+    ];
+    console.log(newData);
+    return newData;
+  }
+
   return (
     <main>
       <XYPlot height={300} width={300}>
@@ -47,6 +63,12 @@ const App = () => {
         <YAxis />
         <LineSeries data={data} />
       </XYPlot>
+
+      <div style={{height: "300px"}}>
+        <ResponsiveLine
+          data={getNivoData()}
+          />
+      </div>
     </main>
 
   );
